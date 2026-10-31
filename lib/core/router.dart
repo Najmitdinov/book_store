@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../data/models/book.dart';
+import '../data/models/external_book.dart';
 import '../features/admin/admin_orders_screen.dart';
 import '../features/admin/edit_book_screen.dart';
 import '../features/admin/manage_books_screen.dart';
 import '../features/cart/cart_screen.dart';
+import '../features/catalog/external_book_screen.dart';
+import '../features/catalog/reader_screen.dart';
 import '../features/details/book_details_screen.dart';
 import '../features/home/book_list_screen.dart';
 import '../features/orders/orders_screen.dart';
@@ -19,6 +22,8 @@ class Routes {
   static const manageBooks = '/admin/books';
   static const editBook = '/admin/edit-book';
   static const adminOrders = '/admin/orders';
+  static const externalBook = '/catalog/book';
+  static const reader = '/catalog/read';
 }
 
 class DetailsArgs {
@@ -58,6 +63,10 @@ class AppRouter {
         page = EditBookScreen(book: args as Book?);
       case Routes.adminOrders:
         page = const AdminOrdersScreen();
+      case Routes.externalBook:
+        page = ExternalBookScreen(book: args as ExternalBook);
+      case Routes.reader:
+        page = ReaderScreen(book: args as ExternalBook);
       default:
         return null;
     }

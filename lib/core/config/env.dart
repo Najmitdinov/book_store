@@ -17,6 +17,11 @@ class Env {
     defaultValue: 'https://book-store-14cd2-default-rtdb.firebaseio.com',
   );
 
+  /// Google Books uchun bepul API kalit (ixtiyoriy). Kalitsiz ham ishlaydi,
+  /// lekin kunlik limit juda kichik:
+  /// `--dart-define=GOOGLE_BOOKS_API_KEY=...`
+  static const googleBooksApiKey = String.fromEnvironment('GOOGLE_BOOKS_API_KEY');
+
   static const authBaseUrl = 'https://identitytoolkit.googleapis.com/v1';
   static const tokenBaseUrl = 'https://securetoken.googleapis.com/v1';
 

@@ -32,13 +32,15 @@ class _EditBookScreenState extends State<EditBookScreen> {
   late final _author = TextEditingController(text: widget.book?.author);
   late final _genre = TextEditingController(text: widget.book?.genre);
   late final _price = TextEditingController(
-    text: widget.book == null ? '' : _num(widget.book!.price),
+    text: (widget.book?.price ?? 0) == 0 ? '' : _num(widget.book!.price),
   );
   late final _discount = TextEditingController(
     text: widget.book == null ? '0' : '${widget.book!.discount}',
   );
   late final _pages = TextEditingController(
-    text: widget.book == null ? '' : '${widget.book!.pageLength}',
+    text: (widget.book?.pageLength ?? 0) == 0
+        ? ''
+        : '${widget.book!.pageLength}',
   );
   late final _rating = TextEditingController(
     text: widget.book == null ? '4.5' : _num(widget.book!.popularity),
@@ -56,7 +58,8 @@ class _EditBookScreenState extends State<EditBookScreen> {
   late Color _color = widget.book?.bgColor ?? const Color(0xFF3D5A80);
   bool _saving = false;
 
-  bool get _isEdit => widget.book != null;
+  /// Bo'sh ID — global katalogdan import qilingan qoralama (yangi kitob).
+  bool get _isEdit => widget.book?.id.isNotEmpty ?? false;
 
   static String _num(double v) =>
       v == v.roundToDouble() ? v.toStringAsFixed(0) : v.toString();

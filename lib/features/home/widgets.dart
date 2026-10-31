@@ -6,7 +6,9 @@ import '../../core/theme/app_theme.dart';
 import '../../core/widgets/book_card.dart';
 import '../../core/widgets/book_cover.dart';
 import '../../core/widgets/common.dart';
+import '../../core/widgets/external_book_card.dart';
 import '../../data/models/book.dart';
+import '../../data/models/external_book.dart';
 import '../../data/models/shelf_entry.dart';
 
 class BookCarousel extends StatelessWidget {
@@ -324,6 +326,52 @@ class HomeSkeleton extends StatelessWidget {
               ),
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Global katalog kolleksiyasi (yuklanayotganda skelet ko'rsatadi).
+class ExternalCarousel extends StatelessWidget {
+  const ExternalCarousel({
+    super.key,
+    required this.title,
+    required this.books,
+    required this.loading,
+    this.onSeeAll,
+  });
+
+  final String title;
+  final List<ExternalBook> books;
+  final bool loading;
+  final VoidCallback? onSeeAll;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!loading && books.isEmpty) return const SizedBox.shrink();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SectionHeader(title: title, onSeeAll: books.isEmpty ? null : onSeeAll),
+        SizedBox(
+          height: 290,
+          child: loading && books.isEmpty
+              ? ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  itemCount: 4,
+                  separatorBuilder: (_, __) => const SizedBox(width: 16),
+                  itemBuilder: (_, __) => const Skeleton(width: 140, radius: 14),
+                )
+              : ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  itemCount: books.length,
+                  separatorBuilder: (_, __) => const SizedBox(width: 16),
+                  itemBuilder: (_, i) => ExternalBookCard(book: books[i]),
+                ),
         ),
       ],
     );

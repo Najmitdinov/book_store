@@ -34,7 +34,10 @@ class MainShellState extends State<MainShell> {
     });
   }
 
-  void goTo(int index) => setState(() => _index = index);
+  void goTo(int index, {bool catalogTab = false}) {
+    setState(() => _index = index);
+    if (catalogTab) ExploreScreen.openCatalog.value++;
+  }
 
   @override
   Widget build(BuildContext context) {

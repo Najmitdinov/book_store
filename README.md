@@ -23,6 +23,14 @@ Firebase (Authentication + Realtime Database) asosidagi zamonaviy kitob do'koni 
 - 💡 **Siz uchun tanladik** — sevimli kitoblaringiz janriga qarab tavsiyalar
 - 🕓 Yaqinda ko'rilganlar, o'qish vaqti taxmini
 
+**🌍 Global katalog (millionlab kitob)**
+- **Open Library** — 20M+ kitob: eng yangi nashrlardan qadimiy asarlargacha (kalit kerak emas)
+- **Project Gutenberg** — jahon klassikasi, ilova ichida **bepul to'liq o'qish** (shrift, fon: qog'oz/sepiya/tun)
+- **Google Books** — yangi nashrlar (ixtiyoriy kalit: `--dart-define=GOOGLE_BOOKS_API_KEY=...`)
+- Asosiy sahifada: "Dunyo bo'ylab yangi kitoblar", "Jahon klassikasi", "Tarixiy kitoblar"
+- Izlash → "Global katalog": manba, saralash (yangi/eski/mashhur), til bo'yicha filtr, cheksiz aylantirish
+- Admin global kitobni bitta tugma bilan do'konga import qiladi — faqat narxni yozadi
+
 **Sozlamalar va profil**
 - Ism va avatar rangini tahrirlash, statistika (buyurtmalar, sevimlilar, o'qilganlar)
 - Mavzu: tizim / yorug' / qorong'i

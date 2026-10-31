@@ -11,23 +11,39 @@ import '../../core/widgets/common.dart';
 import '../../data/models/book.dart';
 import '../../state/books_provider.dart';
 import '../../state/load_state.dart';
+import '../catalog/catalog_view.dart';
 import '../home/book_list_screen.dart';
 import '../shell/main_shell.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
 
+  /// Qiymat oshirilsa — "Global katalog" tabi ochiladi.
+  static final openCatalog = ValueNotifier<int>(0);
+
   @override
   State<ExploreScreen> createState() => _ExploreScreenState();
 }
 
-class _ExploreScreenState extends State<ExploreScreen> {
+class _ExploreScreenState extends State<ExploreScreen>
+    with SingleTickerProviderStateMixin {
   final _search = TextEditingController();
+  late final _tabs = TabController(length: 2, vsync: this);
   Timer? _debounce;
   bool _grid = true;
 
   @override
+  void initState() {
+    super.initState();
+    ExploreScreen.openCatalog.addListener(_showCatalog);
+  }
+
+  void _showCatalog() => _tabs.animateTo(1);
+
+  @override
   void dispose() {
+    ExploreScreen.openCatalog.removeListener(_showCatalog);
+    _tabs.dispose();
     _search.dispose();
     _debounce?.cancel();
     super.dispose();
@@ -54,12 +70,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     final filter = books.filter;
     final results = books.filtered;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.tr('explore_title')),
-        actions: const [CartButton()],
-      ),
-      body: Column(
+    final storeTab = Column(
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 4, 20, 12),
@@ -146,7 +157,39 @@ class _ExploreScreenState extends State<ExploreScreen> {
           if (filter.isActive) _ActiveFilters(filter: filter),
           Expanded(child: _results(books, results)),
         ],
-      ),
+      );
+
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(context.tr('explore_title')),
+          actions: const [CartButton()],
+          bottom: TabBar(
+            controller: _tabs,
+            indicatorColor: AppColors.accent,
+            labelColor: AppColors.accent,
+            labelStyle: const TextStyle(
+              fontFamily: 'Maat_Rounded',
+              fontWeight: FontWeight.w800,
+            ),
+            tabs: [
+              Tab(
+                icon: const Icon(Icons.storefront_rounded),
+                text: context.tr('tab_store'),
+              ),
+              Tab(
+                icon: const Icon(Icons.public_rounded),
+                text: context.tr('tab_global'),
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          controller: _tabs,
+          children: [
+            Padding(padding: const EdgeInsets.only(top: 12), child: storeTab),
+            const CatalogView(),
+          ],
+        ),
     );
   }
 

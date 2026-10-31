@@ -6,6 +6,7 @@ import 'app.dart';
 import 'core/network/api_client.dart';
 import 'data/local/local_storage.dart';
 import 'data/repositories/auth_repository.dart';
+import 'data/repositories/catalog_repository.dart';
 import 'data/repositories/store_repositories.dart';
 import 'state/auth_provider.dart';
 
@@ -29,6 +30,7 @@ Future<void> main() async {
     shelves: ShelfRepository(api),
     reviews: ReviewRepository(api),
     promo: PromoRepository(api),
+    catalog: CatalogRepository(),
   );
   auth.profileRepository = services.profile;
 

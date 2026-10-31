@@ -7,6 +7,7 @@ import 'core/l10n/app_localizations.dart';
 import 'core/router.dart';
 import 'core/theme/app_theme.dart';
 import 'data/local/local_storage.dart';
+import 'data/repositories/catalog_repository.dart';
 import 'data/repositories/store_repositories.dart';
 import 'features/auth/auth_screen.dart';
 import 'features/onboarding/onboarding_screen.dart';
@@ -15,6 +16,7 @@ import 'features/splash/splash_screen.dart';
 import 'state/auth_provider.dart';
 import 'state/books_provider.dart';
 import 'state/cart_provider.dart';
+import 'state/catalog_provider.dart';
 import 'state/library_provider.dart';
 import 'state/orders_provider.dart';
 import 'state/reviews_provider.dart';
@@ -32,6 +34,7 @@ class AppServices {
     required this.shelves,
     required this.reviews,
     required this.promo,
+    required this.catalog,
   });
 
   final LocalStorage storage;
@@ -42,6 +45,7 @@ class AppServices {
   final ShelfRepository shelves;
   final ReviewRepository reviews;
   final PromoRepository promo;
+  final CatalogRepository catalog;
 }
 
 class BookStoreApp extends StatelessWidget {
@@ -59,6 +63,7 @@ class BookStoreApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SettingsProvider(services.storage)),
         ChangeNotifierProvider(create: (_) => BooksProvider(services.books)),
         ChangeNotifierProvider(create: (_) => ReviewsProvider(services.reviews)),
+        ChangeNotifierProvider(create: (_) => CatalogProvider(services.catalog)),
         // Foydalanuvchiga bog'liq holatlar: akkaunt almashsa avtomatik
         // tozalanadi va yangidan yuklanadi.
         ChangeNotifierProxyProvider<AuthProvider, CartProvider>(
